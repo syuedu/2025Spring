@@ -1,0 +1,192 @@
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>삼육대학교 평생교육원의 봄</title>
+  <style>
+    @font-face {
+      font-family: 'CookieRun-Bold';
+      src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2107@1.1/CookieRunBold.woff') format('woff');
+      font-weight: bold;
+      font-style: normal;
+    }
+
+    @font-face {
+      font-family: 'CookieRun-Regular';
+      src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2107@1.1/CookieRunRegular.woff') format('woff');
+      font-weight: normal;
+      font-style: normal;
+
+      
+    }
+
+    body {
+      margin: 0;
+      background: hsl(103, 26%, 95%);
+      font-family: 'Apple SD Gothic Neo', sans-serif;
+      overflow-x: hidden;
+    }
+
+    .container {
+      max-width: 480px;
+      margin: 0 auto;
+      padding: 20px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .title {
+      text-align: center;
+      padding: 30px 10px;
+      background: #fddede;
+      border-radius: 12px;
+    }
+
+    .title h1 {
+      margin: 0;
+      font-size: 24px;
+      color: #cc3366;
+      font-family: 'CookieRun-Bold', sans-serif;
+    }
+
+    .title p {
+      font-size: 16px;
+      margin-top: 8px;
+      color: #666;
+      font-family: 'CookieRun-Regular', sans-serif;
+    }
+
+    .title a {
+      display: inline-block;
+      margin-top: 10px;
+      color: #cc3366;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .gallery {
+      margin-top: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .gallery img,
+    .gallery video {
+      width: 100%;
+      border-radius: 12px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+
+    .gallery img {
+      cursor: pointer;
+    }
+
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.85);
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+    }
+
+    .modal img {
+      max-width: 90%;
+      max-height: 90%;
+      border-radius: 10px;
+    }
+
+    .cherry-container {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      pointer-events: none;
+      overflow: hidden;
+      z-index: 9999;
+    }
+
+    .cherry-petal {
+      position: absolute;
+      pointer-events: none;
+      will-change: transform, top;
+      width: 40px !important;
+      opacity: 0.9 !important;
+      filter: drop-shadow(0 0 2px rgba(0,0,0,0.2));
+    }
+  </style>
+</head>
+<body>
+  <div class="cherry-container"></div>
+
+  <div class="container">
+    <header class="title">
+      <h1>삼육대학교 평생교육원의 봄</h1>
+      <p>따뜻한 봄, 캠퍼스를 물들이다</p>
+      <a href="https://www.instagram.com/_syuedu_/" target="_blank">📷 인스타그램 바로가기</a>
+    </header>
+
+    <section class="gallery">
+      <img src="photo.png" alt="봄사진2" onclick="openModal(this.src)">
+      <video
+        src="syuedu 250417.mp4"
+        autoplay
+        muted
+        loop
+        playsinline
+        controls>
+        브라우저가 비디오를 지원하지 않습니다.
+      </video>
+    </section>
+  </div>
+
+  <div id="modal" class="modal" onclick="closeModal()">
+    <img id="modalImg" src="">
+  </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const cherryContainer = document.querySelector('.cherry-container');
+
+      function createPetal() {
+        const petal = document.createElement('img');
+        petal.src = 'cb.png';
+        petal.classList.add('cherry-petal');
+        petal.style.left = Math.random() * window.innerWidth + 'px';
+        petal.style.top = '-30px';
+        petal.style.width = '30px';
+        petal.style.opacity = Math.random();
+
+        const duration = Math.random() * 5 + 5;
+        const rotate = Math.random() * 360;
+
+        petal.style.transition = `transform ${duration}s linear, top ${duration}s linear`;
+        cherryContainer.appendChild(petal);
+
+        requestAnimationFrame(() => {
+          petal.style.top = window.innerHeight + 'px';
+          petal.style.transform = `rotate(${rotate}deg)`;
+        });
+
+        setTimeout(() => {
+          petal.remove();
+        }, duration * 1000);
+      }
+
+      setInterval(createPetal, 300);
+    });
+
+    function openModal(src) {
+      document.getElementById('modalImg').src = src;
+      document.getElementById('modal').style.display = 'flex';
+    }
+
+    function closeModal() {
+      document.getElementById('modal').style.display = 'none';
+    }
+  </script>
+</body>
+</html>
